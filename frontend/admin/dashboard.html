@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin — Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar">
+    <span class="navbar-brand">Mi Portfolio</span>
+    <ul class="navbar-links">
+        <li><a href="dashboard.html" class="active">Dashboard</a></li>
+        <li><a href="certifications.html">Certificaciones</a></li>
+        <li><a href="projects.html">Proyectos</a></li>
+        <li><a href="messages.html">Mensajes</a></li>
+    </ul>
+    <div class="navbar-user">
+        <span id="username"></span>
+        <button class="btn btn-secondary" onclick="logout()">Salir</button>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="page-header">
+        <h2>Dashboard</h2>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="number" id="totalProjects">—</div>
+            <div class="label">Proyectos totales</div>
+        </div>
+        <div class="stat-card">
+            <div class="number" id="featuredProjects">—</div>
+            <div class="label">Proyectos destacados</div>
+        </div>
+        <div class="stat-card">
+            <div class="number" id="totalMessages">—</div>
+            <div class="label">Mensajes recibidos</div>
+        </div>
+        <div class="stat-card">
+            <div class="number" id="unreadMessages">—</div>
+            <div class="label">Mensajes sin leer</div>
+        </div>
+    </div>
+
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Últimos mensajes</th>
+                    <th>Email</th>
+                    <th>Fecha</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody id="recentMessages">
+                <tr>
+                    <td colspan="4" class="empty-state">Cargando...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="js/auth.js"></script>
+<script>
+    requireAuth();
+
+    async function loadDashboard() {
+        try {
+            const [projectsRes, messagesRes] = await Promise.all([
+                authFetch(`${API}/projects/`),
+                authFetch(`${API}/contact/`)
+            ]);
+
+            const projects = await projectsRes.json();
+            const messages = await messagesRes.json();
+
+            // Stats
+            document.getElementById('totalProjects').textContent = projects.length;
+            document.getElementById('featuredProjects').textContent = projects.filter(p => p.featured).length;
+            document.getElementById('totalMessages').textContent = messages.length;
+            document.getElementById('unreadMessages').textContent = messages.filter(m => !m.read).length;
+
+            // Últimos 5 mensajes
+            const tbody = document.getElementById('recentMessages');
+            const recent = messages.slice(0, 5);
+
+            if (recent.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" class="empty-state">No hay mensajes todavía</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = recent.map(m => `
+                <tr>
+                    <td>${m.name}</td>
+                    <td>${m.email}</td>
+                    <td>${new Date(m.created_at).toLocaleDateString('es-AR')}</td>
+                    <td>
+                        <span class="badge ${m.read ? 'badge-muted' : 'badge-success'}">
+                            ${m.read ? 'Leído' : 'Nuevo'}
+                        </span>
+                    </td>
+                </tr>
+            `).join('');
+
+        } catch (err) {
+            console.error('Error cargando dashboard:', err);
+        }
+    }
+
+    loadDashboard();
+</script>
+
+</body>
+</html>

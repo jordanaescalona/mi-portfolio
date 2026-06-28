@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin — Certificaciones</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar">
+    <span class="navbar-brand">Mi Portfolio</span>
+    <ul class="navbar-links">
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="projects.html">Proyectos</a></li>
+        <li><a href="certifications.html" class="active">Certificaciones</a></li>
+        <li><a href="messages.html">Mensajes</a></li>
+    </ul>
+    <div class="navbar-user">
+        <button class="btn btn-secondary" onclick="logout()">Salir</button>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="page-header">
+        <h2>Certificaciones</h2>
+        <button class="btn btn-primary" onclick="openModal()">+ Nueva certificación</button>
+    </div>
+
+    <div class="alert success" id="alert"></div>
+
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Emisor</th>
+                    <th>Fecha</th>
+                    <th>Orden</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="certificationsTable">
+                <tr>
+                    <td colspan="5" class="empty-state">Cargando...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal crear / editar -->
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+        <div class="modal-header">
+            <h3 id="modalTitle">Nueva certificación</h3>
+            <button class="modal-close" onclick="closeModal()">✕</button>
+        </div>
+
+        <div class="alert error" id="modalAlert"></div>
+
+        <div class="form-group">
+            <label>Nombre *</label>
+            <input type="text" id="fieldName" placeholder="Python Professional Certificate">
+        </div>
+        <div class="form-group">
+            <label>Emisor *</label>
+            <input type="text" id="fieldIssuer" placeholder="Coursera, Udemy, Google...">
+        </div>
+        <div class="form-group">
+            <label>Fecha *</label>
+            <input type="date" id="fieldDate">
+        </div>
+        <div class="form-group">
+            <label>URL de la credencial</label>
+            <input type="url" id="fieldCredentialUrl" placeholder="https://...">
+        </div>
+        <div class="form-group">
+            <label>Imagen del certificado</label>
+            <input type="file" id="fieldImage" accept="image/*">
+        </div>
+        <div class="form-group">
+            <label>Orden</label>
+            <input type="number" id="fieldOrder" placeholder="0" min="0">
+        </div>
+
+        <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
+            <button class="btn btn-primary" id="saveBtn" onclick="saveCertification()">Guardar</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal confirmar eliminación -->
+<div class="modal-overlay" id="deleteOverlay">
+    <div class="modal" style="max-width:380px">
+        <div class="modal-header">
+            <h3>Eliminar certificación</h3>
+            <button class="modal-close" onclick="closeDelete()">✕</button>
+        </div>
+        <p style="color:var(--text-muted); font-size:0.9rem">
+            ¿Estás segura que querés eliminar <strong id="deleteCertName"></strong>? Esta acción no se puede deshacer.
+        </p>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeDelete()">Cancelar</button>
+            <button class="btn btn-danger" onclick="confirmDelete()">Eliminar</button>
+        </div>
+    </div>
+</div>
+
+<script src="js/auth.js"></script>
+<script src="js/certifications.js"></script>
+
+</body>
+</html>

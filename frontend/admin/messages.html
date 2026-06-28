@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin — Mensajes</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar">
+    <span class="navbar-brand">Mi Portfolio</span>
+    <ul class="navbar-links">
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="certifications.html">Certificaciones</a></li>
+        <li><a href="projects.html">Proyectos</a></li>
+        <li><a href="messages.html" class="active">Mensajes</a></li>
+    </ul>
+    <div class="navbar-user">
+        <button class="btn btn-secondary" onclick="logout()">Salir</button>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="page-header">
+        <h2>Mensajes</h2>
+        <span id="unreadBadge" class="badge badge-success" style="font-size:0.85rem"></span>
+    </div>
+
+    <div class="alert success" id="alert"></div>
+
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Email</th>
+                    <th>Mensaje</th>
+                    <th>Fecha</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="messagesTable">
+                <tr>
+                    <td colspan="6" class="empty-state">Cargando...</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal ver mensaje completo -->
+<div class="modal-overlay" id="modalOverlay">
+    <div class="modal" style="max-width:480px">
+        <div class="modal-header">
+            <h3 id="modalName"></h3>
+            <button class="modal-close" onclick="closeModal()">✕</button>
+        </div>
+        <p style="color:var(--text-muted); font-size:0.8rem; margin-bottom:1rem" id="modalEmail"></p>
+        <p style="line-height:1.6; font-size:0.95rem" id="modalMessage"></p>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeModal()">Cerrar</button>
+            <button class="btn btn-primary" id="markReadBtn">Marcar como leído</button>
+        </div>
+    </div>
+</div>
+
+<script src="js/auth.js"></script>
+<script src="js/messages.js"></script>
+
+</body>
+</html>
