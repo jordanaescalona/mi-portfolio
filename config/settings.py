@@ -105,8 +105,13 @@ CORS_ALLOWED_ORIGINS = [
     'http://127.0.0.1:5500',
     'http://localhost:5500',
     'https://portfolio-6va.pages.dev',
-    'https://jordanaescalona.com.ar/'
+    'https://jordanaescalona.com.ar',
+    'https://www.jordanaescalona.com.ar',
 ]
-
+ALLOWED_HOSTS = [
+    'web-production-0caf1.up.railway.app',
+    'jordanaescalona.com.ar',
+    'www.jordanaescalona.com.ar',
+]
 # Archivos estáticos para producción
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
