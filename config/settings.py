@@ -8,7 +8,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['web-production-0caf1.up.railway.app', 'https://jordanaescalona.com.ar/']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -104,6 +104,7 @@ SIMPLE_JWT = {
 CORS_ALLOWED_ORIGINS = [
     'http://127.0.0.1:5500',
     'http://localhost:5500',
+    'https://jordanaescalona.com.ar/'
 ]
 
 # Archivos estáticos para producción

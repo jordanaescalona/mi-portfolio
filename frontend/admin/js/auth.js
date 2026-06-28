@@ -1,5 +1,5 @@
-const API = 'http://localhost:8000/api';
-
+//const API = 'http://localhost:8000/api';
+const API = 'https://web-production-0caf1.up.railway.app/api';
 // Guarda el token al hacer login
 function saveToken(access, refresh) {
     localStorage.setItem('access_token', access);
